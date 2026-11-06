@@ -155,13 +155,6 @@ restart anywhere. No extra script needed:
 
 4. Set `syncColors = true` in `shell.qml` and restart quickshell.
 
-That's it — every wallpaper/theme change rewrites
-`~/.cache/noctalia/quickSoundWave-colors.js` and the `FileView` in the widget
-picks it up instantly. The only contract is the four keys parsed from the
-rendered file (`primary`, `secondary`, `surface`, `surfaceDim` — see the
-`{{colors...}}` tokens in the template); any other theme system that can dump
-those keys to a file works the same way — just adjust the path built in the
-`homeReader` process at the top of `shell.qml`.
 
 ## Troubleshooting
 
