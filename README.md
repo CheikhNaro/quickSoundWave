@@ -124,15 +124,44 @@ Everything lives at the top of [`shell.qml`](shell.qml):
 Restart quickshell after editing (`pkill quickshell && qs -c quickSoundWave &`,
 or relaunch your session autostart command).
 
-### Optional: live Noctalia palette sync
+### Optional: match the wave to your Noctalia palette
 
-Set `syncColors = true` and generate `~/.cache/noctalia/quickSoundWave-colors.js`
-in the format of [`examples/noctalia-colors.js`](examples/noctalia-colors.js)
-whenever your palette changes (a Noctalia palette-change hook or a small
-script dumped from your theme works fine). The `FileView` watches the file, so
-the wave recolors instantly — no restart. The plain-text keys (`primary:`,
-`secondary:`, `surface:`, `surfaceDim:`) are all that matters; any theme
-system can write them.
+Noctalia ships a template processor that regenerates files on every palette
+change. quickSoundWave watches one such file, so the wave recolors live — no
+restart anywhere. No extra script needed:
+
+1. Copy the template input into place:
+
+   ```sh
+   mkdir -p ~/.config/noctalia/templates
+   cp examples/noctalia-template.js ~/.config/noctalia/templates/quickSoundWave-colors.js
+   ```
+
+2. Register it in `~/.config/noctalia/theme.toml`:
+
+   ```toml
+   [theme.templates.user.quickSoundWave-colors]
+   enabled     = true
+   input_path  = "$XDG_CONFIG_HOME/noctalia/templates/quickSoundWave-colors.js"
+   output_path = "$XDG_CACHE_HOME/noctalia/quickSoundWave-colors.js"
+   ```
+
+3. Render it once for the current palette:
+
+   ```sh
+   noctalia msg config-reload
+   noctalia msg templates-apply
+   ```
+
+4. Set `syncColors = true` in `shell.qml` and restart quickshell.
+
+That's it — every wallpaper/theme change rewrites
+`~/.cache/noctalia/quickSoundWave-colors.js` and the `FileView` in the widget
+picks it up instantly. The only contract is the four keys parsed from the
+rendered file (`primary`, `secondary`, `surface`, `surfaceDim` — see the
+`{{colors...}}` tokens in the template); any other theme system that can dump
+those keys to a file works the same way — just adjust the path built in the
+`homeReader` process at the top of `shell.qml`.
 
 ## Troubleshooting
 
@@ -144,7 +173,3 @@ system can write them.
 - **Wave above fullscreen apps?** It uses the *Bottom* layer; if your
   compositor has a special background layer mode (niri maps layer surfaces
   normally), tune `WlrLayershell.layer` / `exclusiveZone` in `shell.qml`.
-
-## License
-
-MIT — see [LICENSE](LICENSE).
