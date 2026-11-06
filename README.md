@@ -6,8 +6,8 @@ An audio-reactive "mountain wave" for your Wayland desktop. A single
 anchored to the bottom of every screen — click-through, excluded from the
 struts, and compositor-agnostic.
 
-https://github.com/user-attachments/assets/00000000-0000-0000-0000-000000000000
-*(add a demo recording of your own)*
+<!-- TODO: drop a screenshot or screen recording in docs/ and link it here,
+     e.g. ![preview](docs/preview.gif) -->
 
 ## Features
 
