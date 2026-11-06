@@ -1,5 +1,8 @@
 # quickSoundWave
 
+https://github.com/user-attachments/assets/7f43c0df-4fa2-4805-b098-d1e7de9047c9
+
+
 An audio-reactive "mountain wave" for your Wayland desktop. A single
 [Quickshell](https://quickshell.org) overlay that reads your system audio with
 [cava](https://github.com/karlstav/cava) and paints a smooth spectrum wave
